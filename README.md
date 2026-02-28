@@ -1,73 +1,165 @@
-# [Your Paper Title]
+# AI Agent-Aided Research System
 
-> Submitted to [AIDER — AI-Driven Energy Research](https://ai-driven-energy-research.github.io)
+An autonomous research pipeline that uses 7 specialized AI agents to produce
+publication-ready academic papers. Fork this template to start a new paper.
 
-## Authors
+Part of [AIDER — AI-Driven Energy Research](https://ai-driven-energy-research.github.io/).
 
-- **[Your Name]** — [Affiliation], [Email]
+## The Team
 
-## Abstract
+| Agent | Persona | Role | Phase |
+|-------|---------|------|-------|
+| **Director** | Richard Feynman | Research direction, novelty framing | Setup (once) |
+| **Librarian** | Eugene Garfield | Literature search, gap verification, reference building | Setup (once) |
+| **Worker** | The PhD Student | Primary author: code, experiments, figures, LaTeX | Production (loop) |
+| **Judge** | Charlie Munger | Technical review, anti-shortcut detection | Production (loop) |
+| **Statistician** | Ronald Fisher | Statistical rigor, uncertainty quantification | Production (loop) |
+| **Illustrator** | Edward Tufte | Figure design, data-ink ratio, visual quality | Production (loop) |
+| **Editor** | William Strunk Jr. | Writing clarity, LaTeX compliance, reference integrity | Production (loop) |
 
-[Write your abstract here. 150-300 words.]
+## How It Works
 
-## How to Reproduce
+### Phase 1: Setup (One-Time)
+
+The **Director** frames the research question and novelty. The **Librarian** searches
+literature, verifies the gap, builds references, and creates figure quality benchmarks
+from competitor papers.
+
+### Phase 2: Production (Iterative Loop)
+
+```
+Worker → Judge → Worker → Statistician → Worker → Editor → Worker → Illustrator → repeat
+```
+
+The Worker does the research. Four specialized reviewers take turns critiquing it.
+The loop runs until all reviewer scores reach 8+/10, at which point you decide
+whether to submit.
+
+## Quick Start
+
+### Prerequisites
+
+- [Claude Code CLI](https://github.com/anthropics/claude-code) installed
+- Python 3.10+
+- LaTeX distribution (texlive recommended)
+- `poppler-utils` (for PDF analysis: `apt install poppler-utils`)
+
+### 1. Fork This Template
+
+Click **"Use this template"** on GitHub to create your own repository.
+
+### 2. Set Up Your Paper
 
 ```bash
-# Clone this repo
-git clone https://github.com/YOUR_USERNAME/YOUR_PAPER_REPO.git
-cd YOUR_PAPER_REPO
+# Interactive mode (recommended):
+python3 setup.py
 
-# Install dependencies
-pip install -r code/requirements.txt
-
-# Run all experiments and generate figures
-bash results/reproduce.sh
+# Or quick mode:
+python3 setup.py \
+    --name "my_paper" \
+    --journal "Applied Energy" \
+    --topic "Neural network surrogate for heat exchanger design" \
+    --gap "No existing surrogate captures turbulent regime transitions" \
+    --methods "Physics-informed neural network with boundary layer constraints"
 ```
+
+This creates the project structure, seeds `plan.md` with your input, then runs
+the Director and Librarian to complete the research plan.
+
+### 3. Start the Production Loop
+
+```bash
+python3 watcher.py
+```
+
+The watcher orchestrates the agent rotation automatically. It runs forever until
+you press Ctrl+C. Drop instructions into `reviews/USER_REVIEW.md` at any time
+to redirect all agents.
 
 ## Repository Structure
 
 ```
-├── paper/                  # Manuscript source
-│   ├── main.tex            # Main manuscript (LaTeX or Markdown)
-│   └── figures/            # Figures used in the paper
-├── code/
-│   ├── README.md           # Setup instructions
-│   ├── requirements.txt    # Python dependencies
-│   └── src/                # All source code
-├── data/
-│   └── README.md           # Data description, download links, license
-├── process-log/
-│   ├── README.md           # Overview of how this paper was produced
-│   ├── ai-sessions/        # AI agent logs, transcripts, prompts
-│   └── human-decisions/    # Timestamped log of human interventions
+├── CLAUDE.md                     # Master system prompt (all agents read this)
+├── PROMPT.md                     # Cycle instructions
+├── setup.py                      # Project setup script
+├── watcher.py                    # Agent orchestrator
+├── tools/                        # Quality analysis tools
+│   ├── layout_analyzer.py        # PDF layout defect detection
+│   ├── figure_inspector.py       # Figure quality scoring
+│   └── pdf_to_pages.py           # PDF → PNG conversion
+├── .claude/agents/               # Agent definitions
+│   ├── director.md               # Research strategist
+│   ├── librarian.md              # Literature expert
+│   ├── worker.md                 # Primary author
+│   ├── judge.md                  # Technical reviewer
+│   ├── statistician.md           # Statistics reviewer
+│   ├── illustrator.md            # Figure reviewer
+│   └── editor.md                 # Writing reviewer
+├── memories/                     # Cross-session state
+│   ├── constraints.md            # Immutable rules
+│   └── consensus.md              # Current phase and scores
+├── work-progress/                # Planning and coordination
+│   ├── plan.md                   # Paper blueprint (living document)
+│   └── progress.md               # Worker signals for review
+├── paper/                        # Manuscript
+│   ├── main.tex
+│   ├── references.bib
+│   └── figures/
+├── code/                         # All source code
+│   ├── README.md
+│   ├── requirements.txt
+│   ├── figures/                  # One Python script per figure
+│   └── utils/
+│       └── plotting_utils.py     # Shared figure styling
+├── data/                         # Datasets
+│   └── README.md
+├── related-papers/               # Literature and competitor analysis
+│   └── README.md
+├── reviews/                      # Agent and user reviews
+│   └── USER_REVIEW.md            # Drop instructions here any time
+├── publishing-guide/             # Journal template files
+├── process-log/                  # AIDER submission requirement
+│   ├── README.md
+│   ├── ai-sessions/
+│   └── human-decisions/
 ├── results/
-│   ├── reproduce.sh        # Script to regenerate all figures/tables
-│   └── figures/            # Generated output figures
-├── REPRODUCIBILITY.md      # Reproducibility checklist
-├── LICENSE
-└── README.md               # This file
+│   └── reproduce.sh
+├── logs/                         # Agent runtime logs
+├── REPRODUCIBILITY.md
+└── LICENSE
 ```
 
-## Process Log
+## User Intervention
 
-This paper was produced using: [describe your workflow — e.g., "Claude AI via paper-factory, with human oversight at each stage"]
+Drop a file called `USER_REVIEW.md` into `reviews/` at any time. The watcher
+detects it, archives it with a timestamp, and forces the Worker to address your
+instructions as the highest priority.
 
-See [`process-log/`](process-log/) for the full record of AI sessions and human decisions.
+## Key Features
+
+- **Anti-shortcut enforcement**: The Judge verifies that computational experiments
+  actually ran — checks output file sizes, solver logs, and timestamps
+- **Textual vision**: The Librarian creates detailed textual descriptions of
+  competitor paper figures (`FIGURE_QUALITY_STANDARDS.md`), giving the Worker and
+  Illustrator a benchmark for journal quality
+- **Programmatic quality tools**: `layout_analyzer.py` and `figure_inspector.py`
+  detect layout defects and figure quality issues without relying on visual inspection
+- **Rate-limit resilience**: The watcher detects API rate limits and runs local
+  tasks while waiting for recovery
+- **Session persistence**: Agent sessions are saved and resumed across restarts
+
+## Submitting to AIDER
+
+When all reviewer scores reach 8+/10:
+
+1. Ensure `results/reproduce.sh` regenerates all figures and tables
+2. Complete `REPRODUCIBILITY.md`
+3. Copy agent logs from `logs/` to `process-log/ai-sessions/`
+4. Document human decisions in `process-log/human-decisions/`
+5. Open a [submission issue](https://github.com/ai-driven-energy-research/submissions/issues/new/choose)
 
 ## License
 
-- Paper: [CC-BY 4.0](https://creativecommons.org/licenses/by/4.0/)
-- Code: [MIT](https://opensource.org/licenses/MIT)
-- Data: [CC0](https://creativecommons.org/publicdomain/zero/1.0/) or [CC-BY 4.0](https://creativecommons.org/licenses/by/4.0/)
-
-## Citation
-
-```bibtex
-@article{yourname2026title,
-  title   = {Your Paper Title},
-  author  = {Your Name},
-  journal = {AI-Driven Energy Research (AIDER)},
-  year    = {2026},
-  url     = {https://github.com/ai-driven-energy-research/YOUR_PAPER_REPO}
-}
-```
+- **Paper** (`paper/`): CC-BY 4.0
+- **Code** (`code/`): MIT License
+- **Data** (`data/`): See `data/README.md`

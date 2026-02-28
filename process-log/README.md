@@ -2,31 +2,39 @@
 
 ## Overview
 
-[Describe how this paper was produced. For example:]
+This paper was produced using the **AI Agent-Aided Research System** — an autonomous
+pipeline of 7 specialized AI agents (Director, Librarian, Worker, Judge, Statistician,
+Illustrator, Editor) orchestrated by a watcher script.
 
-> This paper was produced using [tool/workflow], with human oversight at [stages].
-> The research process took approximately [duration] from initial idea to submission.
+> The full agent session logs are in `../logs/`. Relevant excerpts are copied here
+> for the AIDER submission requirement.
 
 ## Tools Used
 
-- [e.g., Claude AI via paper-factory for drafting and code generation]
-- [e.g., Python/PyTorch for experiments]
-- [e.g., LaTeX for manuscript preparation]
+- AI Agent-Aided Research System (Claude Code CLI + agent orchestration)
+- Python for experiments and figure generation
+- LaTeX for manuscript preparation
 
 ## Workflow
 
-1. **Problem formulation** — [human / AI / both] — [brief description]
-2. **Literature review** — [human / AI / both] — [brief description]
-3. **Methodology development** — [human / AI / both] — [brief description]
-4. **Implementation** — [human / AI / both] — [brief description]
-5. **Experiments** — [human / AI / both] — [brief description]
-6. **Writing** — [human / AI / both] — [brief description]
-7. **Revision** — [human / AI / both] — [brief description]
+1. **Problem formulation** — AI (Director agent, Feynman persona) + human input
+2. **Literature review** — AI (Librarian agent, Garfield persona) + human verification
+3. **Methodology development** — AI (Worker agent) + human oversight via USER_REVIEW.md
+4. **Implementation** — AI (Worker agent) with Judge anti-shortcut verification
+5. **Experiments** — AI (Worker agent) runs actual computations, Judge verifies
+6. **Writing** — AI (Worker agent) writes LaTeX, Editor reviews style/compliance
+7. **Revision** — Iterative loop: Worker addresses Judge, Statistician, Illustrator, Editor reviews
 
 ## AI Sessions
 
 See [`ai-sessions/`](ai-sessions/) for full transcripts and logs.
 
+Agent runtime logs are also available in the repository's `logs/` directory:
+- `WORKER.log`, `JUDGE.log`, `STATISTICIAN.log`, `ILLUSTRATOR.log`, `EDITOR.log`
+- `DIRECTOR.log`, `LIBRARIAN.log`
+
 ## Human Decisions
 
-See [`human-decisions/`](human-decisions/) for a timestamped record of all significant human interventions.
+See [`human-decisions/`](human-decisions/) for a timestamped record of all significant
+human interventions, including USER_REVIEW.md instructions dropped during the
+production loop.
